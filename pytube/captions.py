@@ -107,8 +107,8 @@ class Caption:
               )
               segments.append(line)
               i += 1
-    return "\n".join(segments).strip()
-    
+      return "\n".join(segments).strip()
+
     def download(
         self,
         title: str,
