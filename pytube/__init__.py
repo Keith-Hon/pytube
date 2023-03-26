@@ -17,3 +17,4 @@ from pytube.__main__ import YouTube
 from pytube.contrib.playlist import Playlist
 from pytube.contrib.channel import Channel
 from pytube.contrib.search import Search
+from pytube.util import get_youtube_audio_stream, get_youtube_video_stream, get_youtube_captions
