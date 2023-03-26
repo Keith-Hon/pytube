@@ -78,16 +78,17 @@ class Caption:
         """Convert xml caption tracks to "SubRip Subtitle (srt)".
 
         :param str xml_captions:
-            XML formatted caption tracks.
+        XML formatted caption tracks.
         """
         segments = []
-        root = ElementTree.fromstring(xml_captions)[1]
+        root = ElementTree.fromstring(xml_captions)
         i=0
-        for child in list(root):
+        for child in list(root.iter("body"))[0]:
             if child.tag == 'p':
                 caption = ''
                 if len(list(child))==0:
-                    continue
+                    # instead of 'continue'
+                    caption = child.text
                 for s in list(child):
                     if s.tag == 's':
                         caption += ' ' + s.text
