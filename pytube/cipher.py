@@ -338,6 +338,8 @@ def get_throttling_function_array(js: str) -> List[Any]:
     match = array_regex.search(raw_code)
 
     transform_plan_raw = js
+
+    array_raw = find_object_from_startpoint(raw_code, match.span()[1] - 1)
     str_array = throttling_array_split(array_raw)
 
     converted_array = []
