@@ -1,4 +1,5 @@
 import pytube as pt
+import time
 
 def get_youtube_audio_stream(video_id):
     yt_url = f"https://www.youtube.com/watch?v={video_id}"
@@ -23,6 +24,7 @@ def get_youtube_captions(video_id, retries=3, retry_delay=3):
     
     for attempt in range(retries):
         try:
+            print('trying to get captions the ' + str(attempt + 1) + ' time')            
             yt = pt.YouTube(yt_url)
             captions = yt.captions
             
@@ -33,6 +35,5 @@ def get_youtube_captions(video_id, retries=3, retry_delay=3):
         except (pt.exceptions.PytubeError, ValueError) as e:
             if attempt < retries - 1:  # Retry until the last attempt
                 time.sleep(retry_delay)  # Wait for retry_delay seconds before the next attempt
-                print('retrying the ' + str(attempt) + ' time to get captions..')
             else:
                 return None
