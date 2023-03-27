@@ -18,7 +18,21 @@ def get_youtube_video_stream(video_id):
     stream = video_streams.get_highest_resolution()
     return stream
 
-def get_youtube_captions(video_id):
+def get_youtube_captions(video_id, retries=3, retry_delay=3):
     yt_url = f"https://www.youtube.com/watch?v={video_id}"
-    yt = pt.YouTube(yt_url)    
-    return yt.captions
+    
+    for attempt in range(retries):
+        try:
+            yt = pt.YouTube(yt_url)
+            captions = yt.captions
+            
+            if captions is not None and captions != {}:
+                return captions
+            else:
+                raise ValueError("Captions not found")
+        except (pt.exceptions.PytubeError, ValueError) as e:
+            if attempt < retries - 1:  # Retry until the last attempt
+                time.sleep(retry_delay)  # Wait for retry_delay seconds before the next attempt
+                print('retrying the ' + str(attempt) + ' time to get captions..')
+            else:
+                return None
