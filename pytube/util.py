@@ -28,7 +28,7 @@ def get_youtube_captions(video_id, retries=3, retry_delay=3):
             yt = pt.YouTube(yt_url)
             captions = yt.captions
             
-            if captions is not None and captions != {}:
+            if captions is not None and len(keys(captions)) > 0:
                 return captions
             else:
                 raise ValueError("Captions not found")
